@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import GenreList from './components/GenreList';
 import './App.css'
 
 const bookData = {
@@ -22,10 +21,13 @@ const bookData = {
 };
 
 function App() {
-
   return (
-    <div className="App">
-      <h1 className="heading">Bookstore App</h1>
+    <div className="Bookstore">
+      <h1>Online Bookstore</h1>
+
+      {Object.keys(bookData).map((genre) => (
+        <GenreList key={genre} genre={genre} books={bookData[genre]} />
+      ))}
     </div>
   );
 }
