@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GenreList from './components/GenreList';
+import Button from './components/Button';
 import './App.css'
 
 const bookData = {
@@ -21,12 +22,39 @@ const bookData = {
 };
 
 function App() {
+  const [genresShown, setGenresShown] = useState({
+    fiction: true,
+    "non-fiction": true,
+    children: true,
+  });
+
+  const changeVisibility = (genre) => {
+    const newGenresShown = { ...genresShown };
+    newGenresShown[genre] = !newGenresShown[genre];
+    setGenresShown(newGenresShown);
+  };
+  
   return (
     <div className="Bookstore">
       <h1>Online Bookstore</h1>
 
       {Object.keys(bookData).map((genre) => (
-        <GenreList key={genre} genre={genre} books={bookData[genre]} />
+        <Button
+          key={genre}
+          genre={genre}
+          changeVisibility={changeVisibility}
+          isVisible={genresShown[genre]}
+        />
+      ))}
+
+      {Object.keys(bookData).map((genre) => (
+        genresShown[genre] && (
+          <GenreList
+            key={genre}
+            genre={genre}
+            books={bookData[genre]}
+          />
+        )
       ))}
     </div>
   );
